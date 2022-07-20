@@ -1,30 +1,28 @@
 import { useState } from 'react';
 
-function Form( setContact) {
-    const [form,setForm]= useState({fullname:"" , phone_number:""})
+function Form( {addContact, contact}) {
+    const [form,setForm]= useState({fullname:"" , phone_number:""});
 
-    function onChangeInput(e) {
+    const onChangeInput =(e)=> {
         setForm ({...form , [e.target.name]:  e.target.value})
     }
- function onSubmit(e){
+ const onSubmit = (e)=> {
     e.preventDefault();  //sayfanın yenilenmesini engeller
+
   if(form.fullname === "" || form.phone_number === ""){
  return false;
- }      
-
+ }  
+ addContact([...contact , form]);    
+ setForm({fullname:"" , phone_number:""})
  };
- // isteğim gibi çalışmadı
-
-
-
   return (
-    <div>
-    <div>
-        <input placeholder='Full Name' name='fullname' onChange={onChangeInput}/>
+    <form onSubmit={onSubmit}> <div>   
+      {/* onSubmit={onSubmit} yazmamız ne işe yaradı? */}
+        <input placeholder='Full Name' name='fullname' onChange={onChangeInput} value={form.fullname}/>
        
     </div>
     <div>
-         <input placeholder='Phone Number' name='phone_number' onChange={onChangeInput}/>
+         <input placeholder='Phone Number' name='phone_number' onChange={onChangeInput} value={form.phone_number}/>
     </div>
     <div>
         <button onClick={onSubmit}>Add</button>
@@ -33,7 +31,7 @@ function Form( setContact) {
         <div>Name: {form.fullname}</div>
         <div>Phone: {form.phone_number}</div>
       </div>} */}
-    </div>
+    </form>
   )
 }
 
